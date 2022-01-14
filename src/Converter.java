@@ -1,6 +1,6 @@
 
 public class Converter {
-    double stepKm = 0.000075; // Перевод 75 см в км
+    double stepKm = 0.00075; // Перевод 75 см в км
     double stepCal = 50;
     double kCal = 1000;
 
