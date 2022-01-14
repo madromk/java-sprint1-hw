@@ -4,13 +4,8 @@ public class Converter {
     double stepCal = 50;
     double kCal = 1000;
 
-
-
-
-    void distanceCalories(String nameMonth, StepTracker stepTracker) {
-
-
-        int sum = stepTracker.returnSum(nameMonth);
+    void printDistanceAndCalories(String nameMonth, StepTracker stepTracker) {
+        int sum = stepTracker.getSumStepsOfMonth(nameMonth);
         double distanceKm = sum * stepKm;
         double stepsKCal = sum * stepCal / kCal;
         String resultKm = String.format("%.2f",distanceKm);

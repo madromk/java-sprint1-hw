@@ -7,10 +7,9 @@ public class Main {
         StepTracker stepTracker = new StepTracker();
         Converter converter = new Converter();
 
-
         while (true) {
-        printMenu();
-        int command = scanner.nextInt();
+            printMenu();
+            int command = scanner.nextInt();
             if (command == 1) {
                 System.out.println("Введите название месяца:");
                 String nameMonth = scanner.next();
@@ -27,10 +26,10 @@ public class Main {
                 System.out.println("За какой месяц вы хотите получить статистику ?");
                 String nameMonth =scanner.next();
                     if(stepTracker.monthToData.containsKey(nameMonth)) {
-                        stepTracker.statMonthDays(nameMonth);
-                        stepTracker.sumStepsMonth(nameMonth);
-                        converter.distanceCalories(nameMonth, stepTracker);
-                        stepTracker.bestSeries(nameMonth);
+                        stepTracker.printStepsByMonth(nameMonth);
+                        stepTracker.printStepsStat(nameMonth);
+                        converter.printDistanceAndCalories(nameMonth, stepTracker);
+                        stepTracker.printBestSeries(nameMonth);
                     } else {
                         System.out.println("Неверный формат введенных данных. Повторите попытку");
                     }
