@@ -8,8 +8,8 @@ public class Converter {
         int sum = stepTracker.getSumStepsOfMonth(nameMonth);
         double distanceKm = sum * stepKm;
         double stepsKCal = sum * stepCal / kCal;
-        String resultKm = String.format("%.2f",distanceKm);
-        String resultCl = String.format("%.2f",stepsKCal);
+        String resultKm = String.format("%.2f", distanceKm);
+        String resultCl = String.format("%.2f", stepsKCal);
         System.out.println("За месяц вы прошли " + resultKm + " км");
         System.out.println("За месяц вы сожгли " + resultCl + " килокалорий");
     }

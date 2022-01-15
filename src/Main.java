@@ -11,28 +11,9 @@ public class Main {
             printMenu();
             int command = scanner.nextInt();
             if (command == 1) {
-                System.out.println("Введите название месяца:");
-                String nameMonth = scanner.next();
-                System.out.println("Введите день месяца:");
-                int dayMonth = scanner.nextInt();
-                System.out.println("Введите количество шагов:");
-                int stepsDay = scanner.nextInt();
-                    if(stepTracker.monthToData.containsKey(nameMonth) && dayMonth < 31 && stepsDay > 0) {
-                        stepTracker.MonthData(nameMonth, dayMonth, stepsDay);
-                    } else {
-                        System.out.println("Неверный формат введенных данных. Повторите попытку");
-                    }
+                handleStepsInput(scanner, stepTracker);
             } else if (command == 2) {
-                System.out.println("За какой месяц вы хотите получить статистику ?");
-                String nameMonth =scanner.next();
-                    if(stepTracker.monthToData.containsKey(nameMonth)) {
-                        stepTracker.printStepsByMonth(nameMonth);
-                        stepTracker.printStepsStat(nameMonth);
-                        converter.printDistanceAndCalories(nameMonth, stepTracker);
-                        stepTracker.printBestSeries(nameMonth);
-                    } else {
-                        System.out.println("Неверный формат введенных данных. Повторите попытку");
-                    }
+                handlePrintStatistics(scanner, stepTracker, converter);
             } else if (command == 3) {
                 System.out.println("Введите новую цель:");
                 int target = scanner.nextInt();
@@ -46,12 +27,36 @@ public class Main {
             }
         }
     }
+
     public static void printMenu() {
         System.out.println("Добро пожаловать в Счётчик калорий. Выберете команду для продолжения:");
         System.out.println("1 - Ввести количество шагов за определённый день");
         System.out.println("2 - Напечатать статистику за определённый месяц");
         System.out.println("3 - Изменить цель по количеству шагов в день");
         System.out.println("0 - Выйти из приложения");
+    }
+
+    public static void handleStepsInput(Scanner scanner, StepTracker stepTracker) {
+        System.out.println("Введите название месяца:");
+        String nameMonth = scanner.next();
+        System.out.println("Введите день месяца:");
+        int dayMonth = scanner.nextInt();
+        System.out.println("Введите количество шагов:");
+        int stepsDay = scanner.nextInt();
+        stepTracker.MonthData(nameMonth, dayMonth, stepsDay);
+    }
+
+    public static void handlePrintStatistics(Scanner scanner, StepTracker stepTracker, Converter converter) {
+        System.out.println("За какой месяц вы хотите получить статистику ?");
+        String nameMonth = scanner.next();
+        if (stepTracker.monthToData.containsKey(nameMonth)) {
+            stepTracker.printStepsByMonth(nameMonth);
+            stepTracker.printStepsStat(nameMonth);
+            converter.printDistanceAndCalories(nameMonth, stepTracker);
+            stepTracker.printBestSeries(nameMonth);
+        } else {
+            System.out.println("Неверный формат введенных данных. Повторите попытку");
+        }
     }
 }
 

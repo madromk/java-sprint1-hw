@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 public class StepTracker {
     int targetSteps = 10000;
-    int daysOfMonth = 30;
+    final int daysOfMonth = 30;
     HashMap<String, int[]> monthToData;
 
     StepTracker() {
@@ -21,14 +21,20 @@ public class StepTracker {
         monthToData.put("Декабрь", new int[this.daysOfMonth]);
     }
 
-    void MonthData (String nameMonth, int dayMonth, int stepsDay) { //Сохранение введенных данных пользователем
-        int[] allSteps = monthToData.get(nameMonth);
-        allSteps[(dayMonth)-1] = stepsDay;
-        System.out.println("Данные сохранены");
+    //Сохранение введенных данных пользователем
+    void MonthData(String nameMonth, int dayMonth, int stepsDay) {
+        if (monthToData.containsKey(nameMonth) && dayMonth < 31 && stepsDay > 0) {
+            int[] allSteps = monthToData.get(nameMonth);
+            allSteps[(dayMonth) - 1] = stepsDay;
+            System.out.println("Данные сохранены");
+        } else {
+            System.out.println("Неверный формат введенных данных. Повторите попытку");
+        }
     }
 
-    void printStepsByMonth (String nameMonth) { //Выводим статистику за месяц день = шаги
-        if(monthToData.containsKey(nameMonth)) {
+    //Выводим статистику за месяц день = шаги
+    void printStepsByMonth(String nameMonth) {
+        if (monthToData.containsKey(nameMonth)) {
             int[] currentMonth = monthToData.get(nameMonth);
             for (int i = 0; i < currentMonth.length; i++) {
                 System.out.println((i + 1) + " день: " + currentMonth[i]);
@@ -38,7 +44,8 @@ public class StepTracker {
         }
     }
 
-    int getSumStepsOfMonth (String nameMonth) { //Получение суммы шагов за месяц для метода sumStepsMonth и класса Converter
+    //Получение суммы шагов за месяц для метода sumStepsMonth и класса Converter
+    int getSumStepsOfMonth(String nameMonth) {
         int sum = 0;
         int[] sumSteps = monthToData.get(nameMonth);
         for (Integer steps : sumSteps) {
@@ -47,32 +54,37 @@ public class StepTracker {
         return sum;
     }
 
-    void printStepsStat (String nameMonth) { // Выводим статистику по сумме шагов за месяц
+    // Выводим статистику по сумме шагов за месяц
+    void printStepsStat(String nameMonth) {
         int sum = getSumStepsOfMonth(nameMonth);
         int[] sumSteps = monthToData.get(nameMonth);
+        double meanSteps = (double) sum / sumSteps.length;
+        String resultMeanSteps = String.format("%.2f", meanSteps);
         System.out.println("За выбранный месяц в сумме вы прошли " + sum + " шагов");
-        System.out.println("В среднем количество шагов за месяц составило " + (sum / sumSteps.length));
+        System.out.println("В среднем количество шагов за месяц составило " + resultMeanSteps);
     }
 
-    void printBestSeries (String nameMonth) { //Лучшая серия по шагам
+    //Лучшая серия по шагам
+    void printBestSeries(String nameMonth) {
         int currentSeries = 0;
         int maxSeries = 0;
-        int[] monthsteps = monthToData.get(nameMonth);
-        for (int i : monthsteps) {
-           if(i >= targetSteps) {
-               currentSeries++;
+        int[] monthSteps = monthToData.get(nameMonth);
+        for (int i : monthSteps) {
+            if (i >= targetSteps) {
+                currentSeries++;
+                if (currentSeries > maxSeries) {
+                    maxSeries = currentSeries;
+                }
             } else {
-               if (currentSeries > maxSeries) {
-                   maxSeries = currentSeries;
-               }
                 currentSeries = 0;
-           }
-       }
+            }
+        }
         System.out.println("В выбранном месяца лучшая серия, где кол-во шагов было " +
-                "больше или равно вашей цели составила " + maxSeries +" дней");
+                "больше или равно вашей цели составила " + maxSeries + " дней");
     }
 
-    void setTarget(int target) { //Изменение цели по кол-ву шагов в день
+    //Изменение цели по кол-ву шагов в день
+    void setTarget(int target) {
         this.targetSteps = target;
     }
 
